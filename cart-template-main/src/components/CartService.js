@@ -112,6 +112,48 @@ export const saveProduct = (products,token) => {
     })
    
 }
+export const getAllProduct= (token) => {
+    return fetch('http://localhost:8080/api/v1/products', {
+        headers: { 'Content-Type': 'application/json' , "Authorization":`Bearer ${token}`},
+        "method": 'GET',
+        
+
+    }).then(res => {
+        return res.json();
+    }
+    ).catch(err => {
+        console.log(err)
+    })
+}
+export const deleteProduct= (token,id) => {
+    return fetch(`http://localhost:8080/api/v1/products/${id}`, {
+        headers: { 'Content-Type': 'application/json' ,"Authorization":`Bearer ${token}`},
+        "method": 'DELETE',
+       
+        
+
+    }).then(res => {
+        return res.json();
+    }
+    ).catch(err => {
+        console.log(err)
+    })
+}
+
+export const updateProduct= (product,id,token) => {
+    return fetch(`http://localhost:8080/api/v1/products/${id}`, {
+        headers: { 'Content-Type': 'application/json', "Authorization":`Bearer ${token}` },
+        "method": 'PUT',
+        body:JSON.stringify(product)
+        
+
+    }).then(res => {
+        return res.json();
+    }
+    ).catch(err => {
+        console.log(err)
+    })
+}
 
 export const getAllCategory=(token)=>{
      return fetch('http://localhost:8080/api/categories',
@@ -130,4 +172,36 @@ export const getAllCategory=(token)=>{
         console.log(err)
     })
 
+}
+
+export const saveCategory = (categories,token) => {
+    return fetch('http://localhost:8080/api/categories', {
+        headers: { 
+            'Content-Type': 'application/json' ,
+        "Authorization":`Bearer ${token}`
+     },
+        "method": 'POST',
+        body: JSON.stringify(categories)
+
+    }).then(res => {
+        return res.json();
+    }
+    ).catch(err => {
+        console.log(err)
+    })
+   
+}
+export const deleteCategory= (id,token) => {
+    return fetch(`http://localhost:8080/api/categories/${id}`, {
+        headers: { 'Content-Type': 'application/json',
+        "Authorization":`Bearer ${token}` },
+        "method": 'DELETE',
+        
+
+    }).then(res => {
+        return res.json();
+    }
+    ).catch(err => {
+        console.log(err)
+    })
 }

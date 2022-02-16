@@ -11,9 +11,11 @@ function AddProduct() {
     "prodName": "",
     "unitPrice": "",
     "prodQuantity":"",
-    "category":""
+    "category":"",
+    "productImage":""
   })
-  const [loading,setLoading]=useState(false);
+  const [loading,setLoading]=useState(true);
+  const [message, setMessage] = useState('');
   const [cate,setCate]=useState([]);
   const handleProdName = (e) => {
     const prodName = e.target.value;
@@ -32,11 +34,13 @@ function AddProduct() {
     
   }
   const handleClick=()=>{
+    setMessage("")
    setLoading(true) 
    saveProduct(products,isAuthenticated.jwt).then(data=>{
-    //  if(data.statusCode===200){
-       console.log(data)
-    //  }
+    if(data.statusCode===200){
+      // console.log(data)
+       setMessage(data.message)
+      }
    }).catch(err=>{
      console.log(err)
    })
@@ -51,6 +55,7 @@ function AddProduct() {
       }
     }).catch(err=>{
       console.log(err)
+      //{loading&& <Spinner animation="border" variant="info" />}
     })
   },[])
   return (
@@ -59,7 +64,8 @@ function AddProduct() {
         <Container>
           <Row>
             <Col md={{ span: 6, offset: 3 }}>
-           {loading&& <Spinner animation="border" variant="info" />}
+          
+           {message &&   <Alert  variant={"success"}> {message}</Alert>}
             <h4>  <Alert  variant={"primary"}> Add a new product: 
             
             </Alert></h4>
@@ -87,6 +93,15 @@ function AddProduct() {
                     type="number"
                     placeholder="Product Quantity"
                       onChange={handleProdQuantity}
+                  />
+                </Form.Group>
+                
+                <Form.Group className="mb-3" controlId="formBasicQuantity">
+                  <Form.Label>Product Image</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Product Quantity"
+                      onChange={(e)=>setProducts({ ...products, "productImage": e.target.value })}
                   />
                 </Form.Group>
                 <Form.Group className="mb-3">
